@@ -1,0 +1,36 @@
+
+
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+<h1>Tasks</h1>
+
+<!-- note: this is a chentask -->
+{% for task in tasks %}
+
+<div>
+    <h2>{% if task.done == False %} ⏲ {% else %} 🍋 {% endif %}
+    {{task.title}}</h2>
+
+    <p>{{task.description}}</p>
+    <p>Project: {{task.project.name}}</p>
+
+    <form action ="{%url 'delete_task' task.id %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <button>
+            ❌ Delete
+        </button>
+    </form>
+    
+    <form action ="{%url 'complete_task' task.id %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <button>
+            ☑ Great Job!
+        </button>
+    </form>
+</div>
+
+{% endfor %}
+
+{% endblock %}
